@@ -8,7 +8,7 @@
     <groupId>br.com.gopark</groupId>
     <artifactId>gopark</artifactId>
     <version>0.0.1</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
 
     <parent>
@@ -93,13 +93,23 @@
     </dependencies>
 
 
+    <repositories>
+
+        <repository>
+            <id>localrepository</id>
+            <url>${project.basedir}/libs</url>
+        </repository>
+
+    </repositories>
+
+
     <build>
 
         <finalName>gopark</finalName>
 
         <plugins>
 
-            <plugin>
+            <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.3</version>
@@ -110,17 +120,57 @@
             </plugin>
 
             <plugin>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.4</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <mainClass>theMainClass</mainClass>
+                        </manifest>
+                    </archive>
                 </configuration>
-            </plugin>
+            </plugin>-->
 
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>spring-boot</classifier>
+                            <mainClass>fully.qualified.MainClass</mainClass>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
+
+            <!--<plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>fully.qualified.MainClass</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>-->
 
         </plugins>
 
