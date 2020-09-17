@@ -1,0 +1,22 @@
+version: '3.7'
+services:
+  mysqlsrv:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: 'gopark'
+      MYSQL_ROOT_PASSWORD: '1234'
+    ports:
+      - '3306:3306'
+    networks:
+      - mysql-compose-network
+
+  adminer:
+    image: adminer
+    ports:
+      - 8081:8080
+    networks:
+      - mysql-compose-network
+
+networks:
+  mysql-compose-network:
+    driver: bridge
